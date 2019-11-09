@@ -61,7 +61,7 @@ app.get("*", function(req, res, next) {
 // });
 mongoose
   .connect(
-    "mongodb+srv://me:<howcani55>@cluster0-rkjxu.mongodb.net/test?retryWrites=true&w=majority",
+    "mongodb+srv://me2:howcani66@cluster0-rkjxu.mongodb.net/test?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
