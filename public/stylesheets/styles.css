@@ -1,0 +1,74 @@
+/* HEADER */
+.ajaxbg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+  display: none;
+}
+
+.ajaxinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.delete-form {
+  display: inline;
+}
+
+.checked {
+  color: orange;
+}
+
+/* Index and show page */
+.index {
+  width: 18rem;
+}
+
+/* Show page */
+.line {
+  margin-top: 0;
+}
+
+.review {
+  text-align: justify;
+  word-wrap: break-word;
+}
+
+.reviewBtn {
+  margin-bottom: 10px;
+}
+
+.book-info {
+  margin: 0 auto;
+}
+
+/* Edit and new pages */
+.title {
+  text-align: center;
+}
+
+.form {
+  width: 30%;
+  margin: 30px auto;
+}
+
+/* Cart Table */
+table.alignmiddle td {
+  vertical-align: middle !important;
+}
+
+/* Cart Images */
+img.cpi {
+  width: 100px;
+}
+
+/* Hides PayPal button in checkout.ejs */
+/* .pp {
+  position: absolute;
+  left: -3000px;
+} */

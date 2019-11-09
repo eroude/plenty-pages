@@ -1,0 +1,74 @@
+<% include partials/header %>
+
+<div class="container">
+  <header class="jumbotron">
+    <h1 class="display-4">Welcome to Plenty Pages</h1>
+    <p class="lead">
+      Where you can enter into another world at least for a little while!
+    </p>
+    <% if (currentUser && currentUser.username === "admin") { %>
+
+    <p>
+        <a class="btn btn-primary" href="/books/new">Add new book</a>
+    </p>
+    <% } %>
+
+
+    <!-- Fuzzy Search Form -->
+<p>
+  <form class="form-inline" action="/books" method="GET">
+    <div class="form-group">
+      <input class="form-control" type="text" name="search" placeholder="Book search...">
+      <input class="btn btn-default" type="submit" value="Search">
+    </div>
+  </form>
+</p>
+
+  </header>
+
+  <div class="row">
+
+    <div class="card-deck">
+      <% for (let i = 0; i < books.length; i++) { %>
+      <div class="layout card border-secondary">
+        <img
+          src="<%= books[i].image %>"
+          class="card-img-top"
+          alt="<%= books[i].title %>"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><%= books[i].title %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><%= books[i].author %></h6>
+          <p class="card-text"><%= books[i].synopsis.substring(0, 50) %>...</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">$<%= books[i].price %></li>
+        </ul>
+        <div class="card-body">
+          <% if (books[i].rating === 0) { %>
+          <em>No reviews yet.</em>
+          <% } else { %>
+          <span class="fa fa-star checked"></span>
+          <span
+            class="fa fa-star <% if (books[i].rating > 1.5) { %> checked <% } %>"
+          ></span>
+          <span
+            class="fa fa-star <% if (books[i].rating > 2.5) { %> checked <% } %>"
+          ></span>
+          <span
+            class="fa fa-star <% if (books[i].rating > 3.5) { %> checked <% } %>"
+          ></span>
+          <span
+            class="fa fa-star <% if (books[i].rating > 4.5) { %> checked <% } %>"
+          ></span>
+          <% } %>
+        </div>
+        <div class="card-body">
+            <a class="btn btn-primary" href="/books/<%= books[i]._id %>" class="card-link">Book info</a>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+<% include partials/footer %>

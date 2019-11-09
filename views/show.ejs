@@ -1,0 +1,108 @@
+<% include partials/header %>
+<div class="container">
+  <div class="row">
+  <div class="book-info col-md-6">
+  <h1><%= book.title %></h1>
+
+  <div class="card-deck">
+    <div class="layout card border-secondary">
+      <img
+        src="<%= book.image %>"
+        class="card-img-top"
+        alt="<%= book.title %>"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= book.title %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= book.author %></h6>
+        <p class="card-text"><%= book.synopsis %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">$<%= book.price %></li>
+      </ul>
+      <% if (currentUser && currentUser.username === "admin") { %>
+      <div class="card-body">
+        <button type="button" class="btn btn-warning">
+          <a href="/books/<%= book._id %>/edit">Edit</a>
+        </button>
+        <form
+          class="delete-form"
+          action="/books/<%= book._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-danger">DELETE BOOK</button>
+        </form>
+      </div>
+      <% } %>
+      <div class="card-body">
+          <a class="btn btn-primary" href="/cart/add/<%= book._id %>" class="card-link">Add to cart</a>
+      </div>
+      <div class="card-body">
+          <a class="btn btn-primary" href="/books" class="card-link">View all books</a>
+      </div>
+    </div>
+  </div>
+  <!--Review section-->
+            <div class="thumbnail">
+                <div class="caption-full">
+                    <% if (book.rating === 0) { %>
+                    <h5>
+                        <em>No reviews yet.</em>
+                    </h5>
+                    <% } else { %>
+                    <p>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star <% if (book.rating > 1.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (book.rating > 2.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (book.rating > 3.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (book.rating > 4.5) { %> checked <% } %>"></span>
+                        <em>(total reviews: <%= book.reviews.length %>)</em>
+                    </p>
+                    <p>
+                        Current book rating: <strong><%= book.rating.toFixed(2) %></strong>
+                    </p>
+                    <p><h4>Latest reviews for this book:</h4></p>
+                    <hr class="line">
+                    <% book.reviews.slice(0, 5).forEach(function(review){ %>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <%- '<span class="fa fa-star checked"></span>'.repeat(review.rating) %><%- '<span class="fa fa-star"></span>'.repeat(5 - review.rating) %>
+                            <div>Review by: <strong><%= review.author.username %></strong></div>
+                            <span><em><%= review.updatedAt.toDateString() %></em></span>
+                        </div>
+                        <div class="col-md-9">
+                            <p class="review">
+                                <%= review.text %>
+                            </p>
+                            <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+                            <a class="btn btn-xs btn-warning"
+                               href="/books/<%=book._id %>/reviews/<%=review._id %>/edit">Edit</a>
+                            <form id="delete-form" action="/books/<%=book._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                    <% }); %>
+                    <div class="reviewBtn">
+                        <h4><a href="/books/<%= book._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> See all reviews</a></h4>
+                    </div>
+                    <% } %>
+                    <div>
+                        <a class="btn btn-primary btn-lg <% if (currentUser && book.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/books/<%= book._id %>/reviews/new">
+                            Write a New Review</a>
+                    </div>
+                </div>
+            </div>
+  </div>
+  </div>
+</div>
+<% include partials/footer %>
+
+
+
+
+
+
+
+

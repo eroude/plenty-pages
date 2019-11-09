@@ -1,0 +1,87 @@
+<% include partials/header %> <% if (typeof cart !== "undefined") { %>
+
+<h1 class="page-title text-center">My Cart</h1>
+<br /><br />
+
+<a class="btn btn-primary" href="/books">Shop for more items</a>
+
+<table class="table table-striped alignmiddle">
+  <tr>
+    <th>Image</th>
+    <th>Title</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th></th>
+    <th>Subtotal</th>
+  </tr>
+
+  <% let total = 0; %> <% cart.forEach(function(book) { %> <% let sub =
+  parseFloat(book.qty * book.price).toFixed(2) %> <% total += +sub %>
+  <tr>
+    <td><img class="cpi" src="<%= book.image %>" alt="" /></td>
+    <td><%= book.title %></td>
+    <td>$<%= book.price %></td>
+    <td><%= book.qty %></td>
+    <!-- &nbsp; means non-breaking space -->
+    <td>
+      <a href="/cart/update/<%= book.title %>?action=add">+</a>&nbsp;
+      <a href="/cart/update/<%= book.title %>?action=remove">-</a>&nbsp;
+      <a href="/cart/update/<%= book.title %>?action=clear">Clear</a>&nbsp;
+    </td>
+    <td>$<%= sub %></td>
+  </tr>
+
+  <% }) %>
+  <tr>
+    <td colspan="6" align="right">
+      <b>Total: </b>$<%= parseFloat(total).toFixed(2) %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="9" align="right">
+      <a class="btn btn-danger clearcart" href="/cart/clear">Clear cart</a>
+    </td>
+  </tr>
+</table>
+
+<!-- REMOVED SANDBOX FROM URL BECAUSE IT DIDN'T WORK -->
+<form class="pp" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+  <input type="hidden" name="cmd" value="_cart" />
+  <input type="hidden" name="upload" value="1" />
+  <input
+    type="hidden"
+    name="business"
+    value="jultranet-facilitator@gmail.com"
+  />
+  <% let num = 0; %> <% cart.forEach(function(book) { %> <% num++; %>
+  <input type="hidden" name="item_name_<%= num %>" value="<%= book.title %>" />
+  <input type="hidden" name="amount_<%= num %>" value="<%= book.price %>" />
+  <input type="hidden" name="quantity_<%= num %>" value="<%= book.qty %>" />
+
+  <% }) %>
+  <input type="hidden" name="currency_code" value="CAD" />
+  <input type="hidden" name="amount" value="<%= total %>" />
+
+  <input
+    class="btn btn-lg float-right"
+    type="image"
+    src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif"
+    name="submit"
+    alt="Make payments with PayPal - it's fast, free and secure!"
+  />
+</form>
+
+<% } else { %>
+<h3 class="text-center">Your cart is empty</h3>
+<a class="btn btn-primary" href="/books">Add items</a>
+<% } %>
+
+<script>
+  $(function() {
+    $("a.clearcart").on("click", function() {
+      if (!confirm("Clear cart")) return false;
+    });
+  });
+</script>
+
+<% include partials/footer %>
