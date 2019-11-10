@@ -10,6 +10,7 @@ let express = require("express"),
   User = require("./models/user"),
   seedDB = require("./seeds");
 
+let url = process.env.DATABASEURL || "mongodb://localhost:27017/bookstore";
 let PORT = process.env.PORT || 27017;
 
 // Requiring routes
@@ -54,7 +55,7 @@ app.get("*", function(req, res, next) {
   next();
 });
 
-mongoose.connect(process.env.DATABASEURL, {
+mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
