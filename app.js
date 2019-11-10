@@ -59,25 +59,6 @@ mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-// ********************USE THIS CODE FOR GITHUB******************************
-// mongoose.connect("mongodb://localhost:27017/bookstore", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
-// mongoose
-//   .connect(
-//     "mongodb+srv://me2:howdoi66@cluster0-rkjxu.mongodb.net/test?retryWrites=true&w=majority",
-//     {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true
-//     }
-//   )
-//   .then(() => {
-//     console.log("Connected to DB!");
-//   })
-//   .catch(err => {
-//     console.log("ERROR: ", err.message);
-//   });
 
 // Added because the edit route for reviews findbyidandupdate is deprciated
 mongoose.set("useFindAndModify", false);
